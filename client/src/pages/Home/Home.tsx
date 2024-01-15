@@ -1,5 +1,9 @@
 import * as S from "./elements";
 
 export const Home = () => {
-  return <S.Home>Home</S.Home>;
+  return (
+    <S.Home>
+      <S.ProductsMain />
+    </S.Home>
+  );
 };
