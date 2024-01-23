@@ -12,6 +12,7 @@ export const ProductMainPage = ({
   return (
     <S.Product {...props}>
       <S.Name>{name}</S.Name>
+      <S.Description>{description}</S.Description>
     </S.Product>
   );
 };

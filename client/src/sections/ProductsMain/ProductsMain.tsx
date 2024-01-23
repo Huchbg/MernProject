@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
-import * as S from "./elements";
-import axios from "axios";
 import { Product } from "../../models";
+import * as S from "./elements";
+import * as ProductsApi from "../../network/products_api";
+import { CreateProductProps } from "../../collections";
 
-export const ProductsMain = ({ ...props }) => {
+export interface ProductsMainProps {
+  buttonText: string;
+  createProductProps: CreateProductProps;
+}
+
+export const ProductsMain = ({
+  buttonText,
+  createProductProps,
+  ...props
+}: ProductsMainProps) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [openCreateProduct, setOpenCreateProduct] = useState<boolean>(false);
 
   useEffect(() => {
     async function loadProducts() {
       try {
-        const results = await axios.get("/api/products");
-        const products = results.data;
+        const products = await ProductsApi.fetchNotes();
         setProducts(products);
       } catch (error) {
         console.error(error);
@@ -22,10 +32,25 @@ export const ProductsMain = ({ ...props }) => {
   }, []);
 
   return (
-    <S.ProductsMain {...props}>
-      {products.map((product, index) => {
-        return <S.ProductMainPage {...product} />;
-      })}
-    </S.ProductsMain>
+    <>
+      <S.ProductsMain {...props}>
+        <S.Button
+          onClick={() => {
+            setOpenCreateProduct(true);
+          }}
+        >
+          {buttonText}
+        </S.Button>
+        {products.map((product, index) => {
+          return <S.ProductMainPage {...product} />;
+        })}
+      </S.ProductsMain>
+      {openCreateProduct && (
+        <S.CreateProduct
+          setOpenCreateProduct={setOpenCreateProduct}
+          {...createProductProps}
+        />
+      )}
+    </>
   );
 };

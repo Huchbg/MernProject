@@ -3,42 +3,49 @@ import type { ButtonProps } from "./Button";
 
 const buttonStyles = {
   primary: css`
-    color: ${({ theme }) => theme.colors.white};
-    background-color: ${({ theme }) => theme.colors.buttonGreen};
-    border: none;
-    transition: opacity 300ms ease;
-    box-shadow: 0 2px 0 ${({ theme }) => theme.colors.buttonShadow};
-    font-size: 14px;
-    padding: 10px 20px;
-    border-radius: 4px;
+    height: 40px;
+    font-size: 1.5rem;
+    outline: transparent;
+    background-color: transparent;
+    color: #d9d9d9;
+    border: transparent;
+    border-bottom: 3px solid #4ee1ad;
     cursor: pointer;
+    transition: 200ms ease-in-out;
+    margin-top: 20px;
+
+    width: 100%;
+    max-width: 200px;
 
     &:hover {
-      opacity: 0.8;
+      color: #4ee1ad;
     }
   `,
   secondary: css`
-    color: ${({ theme }) => theme.colors.white};
+    height: 40px;
+    font-size: 1.5rem;
+    outline: transparent;
     background-color: transparent;
-    padding: 0.9em 2em;
-    transition: color 500ms ease, background-color 500ms ease;
+    color: #d9d9d9;
+    border: transparent;
+    border: 3px solid #4ee1ad;
+    cursor: pointer;
+    transition: 200ms ease-in-out;
+    margin-top: 20px;
+    border-radius: 10px;
+
+    width: 100%;
+    max-width: 200px;
 
     &:hover {
-      color: ${({ theme }) => theme.colors.black};
-      background-color: ${({ theme }) => theme.colors.white};
+      color: #4ee1ad;
     }
   `,
 };
 
-export const Button = styled.button<ButtonProps>`
-  font-family: "Playfair Display";
-  font-weight: 700;
-  font-size: 0.8em;
-  line-height: 1;
-  cursor: pointer;
-  outline: none;
-  border-radius: 50px;
-  white-space: nowrap;
-
-  ${({ variant }) => buttonStyles[variant!]}
-`;
+export const Button = styled.button<ButtonProps>(
+  ({ variant }) => css`
+    ${variant == "primary" && buttonStyles}
+    ${variant == "secondary" && buttonStyles}
+  `
+);
