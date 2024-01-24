@@ -3,10 +3,19 @@ import express, { NextFunction, Request, Response } from "express";
 import productsRoutes from "./routes/products";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
+import cors from "cors";
 
 const app = express();
 
 app.use(morgan("dev"));
+
+const allowedOrigins = ["http://localhost:3000"];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins,
+};
+
+app.use(cors(options));
 
 app.use(express.json());
 

@@ -13,7 +13,10 @@ async function fetchData(input: RequestInfo, init?: RequestInit) {
 }
 
 export async function fetchNotes(): Promise<Product[]> {
-  const results = await fetchData("/api/products", { method: "GET" });
+  const results = await fetchData("http://localhost:5000/api/products", {
+    method: "GET",
+  });
+  console.log(results);
   return results.json();
 }
 
@@ -23,7 +26,7 @@ export interface ProductInput {
 }
 
 export async function createProduct(product: ProductInput): Promise<Product> {
-  const response = await fetchData("/api/products", {
+  const response = await fetchData("http://localhost:5000/api/products", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

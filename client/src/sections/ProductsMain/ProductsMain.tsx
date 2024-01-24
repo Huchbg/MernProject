@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
-import { Product } from "../../models";
+"use client";
+
 import * as S from "./elements";
 import * as ProductsApi from "../../network/products_api";
+import { useEffect, useState } from "react";
+import { Product } from "../../models";
 import { CreateProductProps } from "../../collections";
 
 export interface ProductsMainProps {
@@ -42,7 +44,7 @@ export const ProductsMain = ({
           {buttonText}
         </S.Button>
         {products.map((product, index) => {
-          return <S.ProductMainPage {...product} />;
+          return <S.ProductMainPage {...product} key={product._id + index} />;
         })}
       </S.ProductsMain>
       {openCreateProduct && (

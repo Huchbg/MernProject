@@ -1,0 +1,15 @@
+*,
+*::after,
+*::backdrop {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #151515;
+}
+
+a {
+  text-decoration: none;
+}
