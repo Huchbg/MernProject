@@ -1,10 +1,10 @@
 "use client";
 
 import * as S from "./elements";
-import * as ProductsApi from "../../network/products_api";
 import { useEffect, useState } from "react";
 import { Product } from "../../models";
 import { CreateProductProps } from "../../collections";
+import { ProductApiClient } from "@/network";
 
 export interface ProductsMainProps {
   buttonText: string;
@@ -22,7 +22,9 @@ export const ProductsMain = ({
   useEffect(() => {
     async function loadProducts() {
       try {
-        const products = await ProductsApi.fetchNotes();
+        const productApiClient = new ProductApiClient("http://localhost:5000");
+
+        const products = await productApiClient.fetchNotes();
         setProducts(products);
       } catch (error) {
         console.error(error);
@@ -44,12 +46,19 @@ export const ProductsMain = ({
           {buttonText}
         </S.Button>
         {products.map((product, index) => {
-          return <S.ProductMainPage {...product} key={product._id + index} />;
+          return (
+            <S.ProductMainPage
+              {...product}
+              key={product._id + index}
+              setProducts={setProducts}
+            />
+          );
         })}
       </S.ProductsMain>
       {openCreateProduct && (
         <S.CreateProduct
           setOpenCreateProduct={setOpenCreateProduct}
+          setProducts={setProducts}
           {...createProductProps}
         />
       )}

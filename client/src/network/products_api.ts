@@ -1,38 +1,51 @@
 import { Product } from "../models";
 
-async function fetchData(input: RequestInfo, init?: RequestInit) {
-  const response = await fetch(input, init);
+export class ProductApiClient {
+  private baseUrl: string;
 
-  if (response.ok) {
-    return response;
-  } else {
-    const errorBody = await response.json();
-    const errorMessage = errorBody.error;
-    throw Error(errorMessage);
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
   }
-}
 
-export async function fetchNotes(): Promise<Product[]> {
-  const results = await fetchData("http://localhost:5000/api/products", {
-    method: "GET",
-  });
-  console.log(results);
-  return results.json();
+  private async fetchData(input: RequestInfo, init?: RequestInit) {
+    const response = await fetch(input, init);
+
+    if (response.ok) {
+      return response;
+    } else {
+      const errorBody = await response.json();
+      const errorMessage = errorBody.error;
+      throw Error(errorMessage);
+    }
+  }
+
+  public async fetchNotes(): Promise<Product[]> {
+    const results = await this.fetchData(`${this.baseUrl}/api/products`, {
+      method: "GET",
+    });
+    return results.json();
+  }
+
+  public async createProduct(product: ProductInput): Promise<Product> {
+    const response = await this.fetchData(`${this.baseUrl}/api/products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+
+    return response.json();
+  }
+
+  public async deleteProduct(productId: string) {
+    await this.fetchData(`${this.baseUrl}/api/products/${productId}`, {
+      method: "DELETE",
+    });
+  }
 }
 
 export interface ProductInput {
   name: string;
   description: string;
-}
-
-export async function createProduct(product: ProductInput): Promise<Product> {
-  const response = await fetchData("http://localhost:5000/api/products", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-
-  return response.json();
 }

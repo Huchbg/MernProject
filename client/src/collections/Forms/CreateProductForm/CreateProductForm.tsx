@@ -2,7 +2,8 @@ import * as S from "./elements";
 import { useZodForm } from "../../../hooks";
 import { createFormSchema } from "../../../schemas";
 import { useState } from "react";
-import * as ProductsApi from "../../../network/products_api";
+import { Product } from "@/models";
+import { ProductApiClient } from "@/network";
 
 export interface CreateProductFormProps {
   productNameInputText: string;
@@ -10,12 +11,18 @@ export interface CreateProductFormProps {
   buttonText: string;
 }
 
+interface HooksProps {
+  setOpenCreateProduct: React.Dispatch<React.SetStateAction<boolean>>;
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+}
 export const CreateProductForm = ({
   buttonText,
   productNameInputText,
   productDescriptionInputText,
+  setOpenCreateProduct,
+  setProducts,
   ...props
-}: CreateProductFormProps) => {
+}: CreateProductFormProps & HooksProps) => {
   const [error, setError] = useState<string>("");
   const [hasError, setHasError] = useState<boolean>(false);
   const { control, handleSubmit } = useZodForm(createFormSchema, {
@@ -27,10 +34,15 @@ export const CreateProductForm = ({
 
   const submitHandler = handleSubmit(async ({ name, description }) => {
     try {
-      const results = await ProductsApi.createProduct({
+      const productApiclient = new ProductApiClient("http://localhost:5000");
+
+      const results = await productApiclient.createProduct({
         name: name,
         description: description,
       });
+
+      setOpenCreateProduct(false);
+      setProducts(([...prev]) => [...prev, results]);
     } catch (error) {
       setHasError(true);
       console.error(error);

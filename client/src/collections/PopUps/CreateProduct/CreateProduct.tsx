@@ -1,5 +1,6 @@
 import * as S from "./elements";
 import { CreateProductFormProps } from "../../Forms";
+import { Product } from "@/models";
 
 export interface CreateProductProps {
   formProps: CreateProductFormProps;
@@ -8,10 +9,12 @@ export interface CreateProductProps {
 
 interface HooksProps {
   setOpenCreateProduct: React.Dispatch<React.SetStateAction<boolean>>;
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
 export const CreateProduct = ({
   setOpenCreateProduct,
+  setProducts,
   formProps,
   title,
 }: CreateProductProps & HooksProps) => {
@@ -46,7 +49,11 @@ export const CreateProduct = ({
         role="presentation"
       >
         <S.Title>{title}</S.Title>
-        <S.CreateProductForm {...formProps} />
+        <S.CreateProductForm
+          setProducts={setProducts}
+          setOpenCreateProduct={setOpenCreateProduct}
+          {...formProps}
+        />
       </S.FormContainer>
     </S.Overlay>
   );
