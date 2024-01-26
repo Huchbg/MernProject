@@ -10,10 +10,13 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    image: {
-      data: Buffer, // Assuming you store the image as a buffer
-      contentType: String,
-    },
+    images: [
+      {
+        data: Buffer,
+        contentType: String,
+        id: String,
+      },
+    ],
   },
   { timestamps: true }
 );

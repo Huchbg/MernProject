@@ -30,7 +30,12 @@ export class ProductApiClient {
     const formData = new FormData();
     formData.append("name", product.name);
     formData.append("description", product.description);
-    formData.append("image", product.image || ""); // Assuming product.image is a File
+
+    if (product.images) {
+      product.images.forEach((image, index) => {
+        formData.append("images", image, `image_${index}.jpg`);
+      });
+    } // Assuming product.image is a File
 
     const response = await this.fetchData(`${this.baseUrl}/api/products`, {
       method: "POST",
@@ -50,5 +55,5 @@ export class ProductApiClient {
 export interface ProductInput {
   name: string;
   description: string;
-  image: File | null;
+  images: File[] | null;
 }

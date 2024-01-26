@@ -9,15 +9,15 @@ interface HooksProps {
   setOpenCreateProduct: React.Dispatch<React.SetStateAction<boolean>>;
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
+
 export const CreateProductForm = ({
   setOpenCreateProduct,
   setProducts,
   ...props
 }: HooksProps) => {
+  const MAX_FILES_LIMIT = 5;
   const [error, setError] = useState<string>("");
-  const [image, setImage] = useState({
-    image: null as File | null,
-  });
+  const [images, setImages] = useState<FileList | null>(null);
   const [hasError, setHasError] = useState<boolean>(false);
   const { control, handleSubmit } = useZodForm(createFormSchema, {
     defaultValues: {
@@ -28,18 +28,20 @@ export const CreateProductForm = ({
 
   const submitHandler = handleSubmit(async ({ name, description }) => {
     try {
-      const productApiclient = new ProductApiClient("http://localhost:5000");
+      const productApiClient = new ProductApiClient("http://localhost:5000");
 
-      if (image != null) {
-      }
-      const results = await productApiclient.createProduct({
-        name: name,
-        description: description,
-        image: image.image ? image.image : null,
+      // Assuming your API expects an array of images
+      const imageArray = images ? Array.from(images) : [];
+
+      // console.log(imageArray);
+      const results = await productApiClient.createProduct({
+        name,
+        description,
+        images: imageArray,
       });
 
       setOpenCreateProduct(false);
-      // setProducts(([...prev]) => [results, ...prev]);
+      setProducts(([...prev]) => [results, ...prev]);
     } catch (error) {
       setHasError(true);
       console.error(error);
@@ -48,8 +50,17 @@ export const CreateProductForm = ({
   });
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    setImage({ image: selectedFile || null });
+    const selectedFiles = e.target.files;
+
+    // Check if the number of selected files exceeds the limit
+    if (selectedFiles && selectedFiles.length <= MAX_FILES_LIMIT) {
+      // You can display an error message or take any appropriate action
+      setImages(selectedFiles);
+    } else {
+      alert(`Please select up to ${MAX_FILES_LIMIT} files.`);
+      e.target.value = "";
+      setImages(null);
+    }
   };
 
   return (
@@ -71,10 +82,16 @@ export const CreateProductForm = ({
         rows={3}
         name="description"
       />
-      <S.FileInput type="file" name="image" onChange={handleImageChange} />
+      <S.FileInput
+        type="file"
+        name="images"
+        multiple
+        accept="image/*"
+        onChange={handleImageChange}
+      />
 
       <S.Button variant="secondary" type="submit">
-        Create Produc
+        Create Product
       </S.Button>
       {hasError && <S.ErrorP>Please fill both fields</S.ErrorP>}
     </S.FormContainer>
