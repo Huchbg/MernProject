@@ -19,7 +19,7 @@ export class ProductApiClient {
     }
   }
 
-  public async fetchNotes(): Promise<Product[]> {
+  public async fetchProducts(): Promise<Product[]> {
     const results = await this.fetchData(`${this.baseUrl}/api/products`, {
       method: "GET",
     });
@@ -27,12 +27,14 @@ export class ProductApiClient {
   }
 
   public async createProduct(product: ProductInput): Promise<Product> {
+    const formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("image", product.image || ""); // Assuming product.image is a File
+
     const response = await this.fetchData(`${this.baseUrl}/api/products`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product),
+      body: formData,
     });
 
     return response.json();
@@ -48,4 +50,5 @@ export class ProductApiClient {
 export interface ProductInput {
   name: string;
   description: string;
+  image: File | null;
 }

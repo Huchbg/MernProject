@@ -35,10 +35,6 @@ export const FormInput = <T extends FieldValues = any>({
   const InputComponent = textarea ? "textarea" : "input";
 
   if (error) {
-    console.log("There is error");
-  }
-
-  if (error) {
     return (
       <>
         <S.FormInput
@@ -60,7 +56,6 @@ export const FormInput = <T extends FieldValues = any>({
       <S.FormInput
         {...props}
         as={InputComponent}
-        variant={error ? "alert" : variant}
         placeholder={placeholder}
         onChange={onChange}
         onBlur={onBlur}

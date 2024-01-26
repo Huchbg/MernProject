@@ -17,47 +17,11 @@ export const Input = styled(_FormInput)(
   () => css`
     margin-top: 20px;
 
-    background-color: #242424;
-    color: #d9d9d9;
-    border: 2px solid #4ee1ad;
-    border-radius: 5px;
-    padding: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-    font-size: 20px;
-
-    &:hover {
-      border-color: #d9d9d9;
-    }
-
     &:nth-child(1) {
       margin-top: 0;
     }
   `
 ) as typeof _FormInput;
-
-export const TextArea = styled.textarea(
-  () => css`
-    margin-top: 20px;
-
-    background-color: #242424;
-    color: #d9d9d9;
-    border: 2px solid #4ee1ad;
-    border-radius: 5px;
-    padding: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-    font-size: 20px;
-
-    &:hover {
-      border-color: #d9d9d9;
-    }
-
-    &:nth-child(1) {
-      margin-top: 0;
-    }
-  `
-);
 
 export const H2 = styled.h2(
   () => css`
@@ -80,6 +44,31 @@ export const ErrorP = styled.p(
     margin: 0;
     margin-top: 20px;
     text-align: center;
+  `
+);
+
+export const FileInput = styled.input(
+  () => css`
+    margin-top: 20px;
+
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+    background: transparent;
+
+    border: 2px solid #4ee1ad;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+
+    &:hover,
+    &:focus {
+      border-color: #d9d9d9;
+    }
+
+    &::-webkit-file-upload-button {
+      visibility: hidden;
+    }
   `
 );
 

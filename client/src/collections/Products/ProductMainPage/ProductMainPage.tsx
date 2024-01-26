@@ -13,9 +13,11 @@ export const ProductMainPage = ({
   description,
   name,
   updatedAt,
+  imageURL,
   setProducts,
   ...props
 }: Product & HooksProps & HTMLDivProps) => {
+  console.log(imageURL);
   return (
     <S.Product {...props}>
       <S.Name>{name}</S.Name>
@@ -34,6 +36,12 @@ export const ProductMainPage = ({
           });
         }}
       >
+        <S.Image
+          alt="Lo"
+          src={imageURL ? imageURL : ""}
+          width={20}
+          height={20}
+        />
         <S.ImageContainer>
           <S.Image
             src="/imgs/trash-can (1).png"

@@ -1,11 +1,5 @@
 import * as S from "./elements";
-import { CreateProductFormProps } from "../../Forms";
 import { Product } from "@/models";
-
-export interface CreateProductProps {
-  formProps: CreateProductFormProps;
-  title: string;
-}
 
 interface HooksProps {
   setOpenCreateProduct: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,9 +9,7 @@ interface HooksProps {
 export const CreateProduct = ({
   setOpenCreateProduct,
   setProducts,
-  formProps,
-  title,
-}: CreateProductProps & HooksProps) => {
+}: HooksProps) => {
   const handleContainerClick = (
     e:
       | React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -48,11 +40,10 @@ export const CreateProduct = ({
         }}
         role="presentation"
       >
-        <S.Title>{title}</S.Title>
+        <S.Title>Create Product</S.Title>
         <S.CreateProductForm
           setProducts={setProducts}
           setOpenCreateProduct={setOpenCreateProduct}
-          {...formProps}
         />
       </S.FormContainer>
     </S.Overlay>

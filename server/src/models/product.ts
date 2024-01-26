@@ -1,4 +1,4 @@
-import { InferSchemaType, Schema, model } from "mongoose"
+import { InferSchemaType, Schema, model } from "mongoose";
 
 const productSchema = new Schema(
   {
@@ -10,10 +10,14 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    image: {
+      data: Buffer, // Assuming you store the image as a buffer
+      contentType: String,
+    },
   },
   { timestamps: true }
-)
+);
 
-type Product = InferSchemaType<typeof productSchema>
+type Product = InferSchemaType<typeof productSchema>;
 
-export default model<Product>("Product", productSchema)
+export default model<Product>("Product", productSchema);
