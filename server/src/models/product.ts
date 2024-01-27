@@ -10,11 +10,18 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    imagesId: {
+      type: String,
+      required: true,
+    },
     images: [
       {
         data: Buffer,
         contentType: String,
         id: String,
+        link: String,
+        height: Number,
+        width: Number,
       },
     ],
   },

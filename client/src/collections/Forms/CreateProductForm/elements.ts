@@ -61,6 +61,10 @@ export const FileInput = styled.input(
     cursor: pointer;
     outline: none;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     &:hover,
     &:focus {
       border-color: #d9d9d9;

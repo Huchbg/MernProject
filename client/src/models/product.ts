@@ -4,5 +4,10 @@ export interface Product {
   description: string;
   createdAt: string;
   updatedAt: string;
-  imageURL: string | null;
+  imagesId: string;
+  images: {
+    link: string;
+    height: number;
+    width: number;
+  }[];
 }

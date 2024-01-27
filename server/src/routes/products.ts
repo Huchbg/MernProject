@@ -14,8 +14,6 @@ router.patch("/:productId", ProductsController.updateProduct);
 
 router.delete("/:productId", ProductsController.deleteProduct);
 
-router.get("/images/:productId", ProductsController.getImages);
-
-router.get("/images/:productId/:imageId", ProductsController.getImage);
+router.get("/images/:productImagesId/:imageId", ProductsController.getImage);
 
 export default router;

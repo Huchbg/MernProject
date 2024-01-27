@@ -3,30 +3,13 @@ import ProductModel from "../models/product";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
+import sharp from "sharp";
 
 export const getProducts: RequestHandler = async (req, res, next) => {
   try {
     const products = await ProductModel.find().sort({ createdAt: -1 }).exec();
-    const productsWithImageURL = products.map((product) => {
-      let imageURL = null;
 
-      if (product.images && product.images.length > 0) {
-        // console.log(true);
-        const firstImage = product.images[0];
-
-        if (firstImage && firstImage.contentType) {
-          // console.log(firstImage);
-          imageURL = `http://localhost:5000/api/products/images/${product._id}`;
-        }
-      }
-
-      return {
-        ...product.toObject(),
-        imageURL: imageURL,
-      };
-    });
-
-    res.status(200).json(productsWithImageURL);
+    res.status(200).json(products);
   } catch (error) {
     next(error);
   }
@@ -71,8 +54,10 @@ export const createProduct: RequestHandler<
   // console.log(name, description, images);
 
   let images: Express.Multer.File[] = [];
+  let imagesIdForProduct: string = "";
   if (testImages && Array.isArray(testImages)) {
     images = [...testImages];
+    imagesIdForProduct = uuidv4();
   }
   try {
     if (!name) {
@@ -86,15 +71,22 @@ export const createProduct: RequestHandler<
     const newProduct = await ProductModel.create({
       name: name,
       description: description,
-      images: images.map((image) => {
-        const uniqueId = uuidv4();
+      imagesId: imagesIdForProduct,
+      images: await Promise.all(
+        images.map(async (image) => {
+          const uniqueId = uuidv4();
+          const metadata = await sharp(image.buffer).metadata();
 
-        return {
-          data: image.buffer,
-          contentType: image.mimetype,
-          id: uniqueId,
-        };
-      }),
+          return {
+            data: image.buffer,
+            contentType: image.mimetype,
+            id: uniqueId,
+            link: `http://localhost:5000/api/products/images/${imagesIdForProduct}/${uniqueId}`,
+            height: metadata.height,
+            width: metadata.width,
+          };
+        })
+      ),
     });
 
     res.status(201).json(newProduct);
@@ -174,35 +166,14 @@ export const deleteProduct: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const getImages: RequestHandler = async (req, res, next) => {
-  const productId = req.params.productId;
-
-  try {
-    const product = await ProductModel.findById(productId).exec();
-
-    if (!product || !product.images || product.images.length === 0) {
-      // Handle not found or no images
-      return res.sendStatus(404);
-    }
-
-    // Construct an array of image URLs
-    const imageUrls = product.images.map((image) => {
-      const imageId = image.id;
-      return `http://localhost:5000/api/products/images/${productId}/${imageId}`;
-    });
-
-    res.status(200).json(imageUrls);
-  } catch (error) {
-    next(error);
-  }
-};
-
 export const getImage: RequestHandler = async (req, res, next) => {
-  const productId = req.params.productId;
+  const productImagesId = req.params.productImagesId;
   const imageId = req.params.imageId;
 
   try {
-    const product = await ProductModel.findById(productId).exec();
+    const product = await ProductModel.findOne({
+      imagesId: productImagesId,
+    }).exec();
 
     if (!product || !product.images || product.images.length === 0) {
       // Handle not found or no images

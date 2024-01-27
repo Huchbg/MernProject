@@ -1,7 +1,6 @@
 import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import productsRoutes from "./routes/products";
-import path from "path";
 import morgan from "morgan";
 import createHttpError, { isHttpError } from "http-errors";
 import cors from "cors";
@@ -19,8 +18,6 @@ const options: cors.CorsOptions = {
 app.use(cors(options));
 
 app.use(express.json());
-
-app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use("/api/products", productsRoutes);
 

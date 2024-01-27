@@ -2,8 +2,6 @@ import { HTMLDivProps } from "@/types";
 import { Product } from "../../../models";
 import { ProductApiClient } from "@/network";
 import * as S from "./elements";
-import { useState, useEffect } from "react";
-import axios from "axios";
 
 interface HooksProps {
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
@@ -15,40 +13,23 @@ export const ProductMainPage = ({
   description,
   name,
   updatedAt,
-  imageURL,
+  imagesId,
+  images,
   setProducts,
   ...props
 }: Product & HooksProps & HTMLDivProps) => {
-  const [images, setImages] = useState<string[]>([]);
-
-  useEffect(() => {
-    async function getImages() {
-      const response = await axios.get(imageURL ? imageURL : "");
-
-      console.log(response);
-
-      setImages(response.data);
-    }
-
-    if (imageURL) {
-      try {
-        getImages();
-      } catch (error) {}
-    }
-  }, []);
-
   return (
     <S.Product {...props}>
       <S.Name>{name}</S.Name>
       <S.Description>{description}</S.Description>
-      {images &&
+      {imagesId !== "" &&
         images.map((image, index) => (
           <S.Image
-            width={40}
-            height={40}
-            src={image}
-            alt={image}
-            key={image + index}
+            width={image.width}
+            height={image.height}
+            src={image.link}
+            alt={image.link}
+            key={image.link + index}
           />
         ))}
       <S.DeleteButton
