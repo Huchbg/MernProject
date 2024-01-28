@@ -3,8 +3,15 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  env: { productApiDomain: process.env.PRODUCT_API_DOMAIN },
   images: {
-    domains: ["localhost"],
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "**",
+      },
+    ],
   },
 };
 

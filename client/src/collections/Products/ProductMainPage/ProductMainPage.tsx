@@ -22,21 +22,28 @@ export const ProductMainPage = ({
     <S.Product {...props}>
       <S.Name>{name}</S.Name>
       <S.Description>{description}</S.Description>
-      {imagesId !== "" &&
-        images.map((image, index) => (
-          <S.Image
-            width={image.width}
-            height={image.height}
-            src={image.link}
-            alt={image.link}
-            key={image.link + index}
-          />
-        ))}
+      <S.ProductImagesContiner>
+        {imagesId !== "" &&
+          images.map((image, index) => (
+            <S.ProductImageContainer
+              href={image.link}
+              target="_blank"
+              key={image.link + index}
+            >
+              <S.Image
+                src={image.link}
+                alt={image.link}
+                fill={true}
+                style={{ objectFit: "contain" }}
+              />
+            </S.ProductImageContainer>
+          ))}
+      </S.ProductImagesContiner>
       <S.DeleteButton
         onClick={async () => {
-          const productApiClient = new ProductApiClient(
-            "http://localhost:5000"
-          );
+          const productApiDomain = process.env.productApiDomain || "";
+
+          const productApiClient = new ProductApiClient(productApiDomain);
           await productApiClient.deleteProduct(_id);
 
           setProducts(([...prev]) => {

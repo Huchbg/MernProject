@@ -5,7 +5,7 @@ import {
 } from "../../../components";
 
 export const FormContainer = styled.form(
-  ({ theme: { colors, breakpoint } }) => css`
+  () => css`
     width: 100%;
 
     display: flex;
@@ -47,34 +47,59 @@ export const ErrorP = styled.p(
   `
 );
 
-export const FileInput = styled.input(
-  () => css`
-    margin-top: 20px;
+export const FileInput = styled.input`
+  height: 0;
+  overflow: hidden;
+  width: 0;
+`;
 
-    font-size: 16px;
-    color: white;
-    padding: 10px;
-    background: transparent;
+export const FileInputLabel = styled.label`
+  background: #f15d22;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Rubik", sans-serif;
+  font-size: inherit;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  outline: none;
+  padding: 1rem 50px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
 
-    border: 2px solid #4ee1ad;
-    border-radius: 5px;
-    cursor: pointer;
-    outline: none;
+  max-width: 190px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  &:hover {
+    background-color: darken(#f15d22, 10%);
+  }
 
-    &:hover,
-    &:focus {
-      border-color: #d9d9d9;
+  background-color: #99c793;
+  border-radius: 50px;
+  overflow: hidden;
+
+  &::before {
+    color: #fff;
+    content: "\f382";
+    font-size: 100%;
+    height: 100%;
+    right: 130%;
+    line-height: 3.3;
+    position: absolute;
+    top: 0px;
+    transition: all 0.3s;
+  }
+
+  &:hover {
+    background-color: darken(#99c793, 30%);
+
+    &::before {
+      right: 75%;
     }
-
-    &::-webkit-file-upload-button {
-      visibility: hidden;
-    }
-  `
-);
+  }
+`;
 
 // export const CheckBoxText = styled(_Paragraph)(
 //   ({ theme: { colors } }) => css`

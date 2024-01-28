@@ -28,7 +28,9 @@ export const CreateProductForm = ({
 
   const submitHandler = handleSubmit(async ({ name, description }) => {
     try {
-      const productApiClient = new ProductApiClient("http://localhost:5000");
+      const productApiDomain = process.env.productApiDomain || "";
+
+      const productApiClient = new ProductApiClient(productApiDomain);
 
       // Assuming your API expects an array of images
       const imageArray = images ? Array.from(images) : [];
@@ -45,6 +47,7 @@ export const CreateProductForm = ({
     } catch (error) {
       setHasError(true);
       console.error(error);
+
       alert(error);
     }
   });
@@ -86,9 +89,11 @@ export const CreateProductForm = ({
         type="file"
         name="images"
         multiple
+        id="file"
         accept="image/*"
         onChange={handleImageChange}
       />
+      <S.FileInputLabel htmlFor="file">Choose File</S.FileInputLabel>
 
       <S.Button variant="secondary" type="submit">
         Create Product

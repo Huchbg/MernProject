@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Image as _Image } from "@/components";
+import Link from "next/link";
 
 export const Product = styled.div(
   () => css`
@@ -74,3 +75,22 @@ export const ImageContainer = styled.div(
 );
 
 export const Image = styled(_Image)(() => css``);
+
+export const ProductImageContainer = styled(Link)(
+  () => css`
+    margin: 10px;
+    width: 100%;
+    max-width: 200px;
+    position: relative;
+    height: 100%;
+    min-height: 200px;
+  `
+);
+
+export const ProductImagesContiner = styled.div(
+  () => css`
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+  `
+);

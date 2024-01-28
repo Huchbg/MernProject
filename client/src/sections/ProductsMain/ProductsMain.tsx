@@ -13,7 +13,9 @@ export const ProductsMain = ({ ...props }: HTMLSectionProps) => {
   useEffect(() => {
     async function loadProducts() {
       try {
-        const productApiClient = new ProductApiClient("http://localhost:5000");
+        const productApiDomain = process.env.productApiDomain || "";
+
+        const productApiClient = new ProductApiClient(productApiDomain);
 
         const products = await productApiClient.fetchProducts();
         setProducts(products);
