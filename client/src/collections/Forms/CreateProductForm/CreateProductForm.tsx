@@ -93,8 +93,13 @@ export const CreateProductForm = ({
         accept="image/*"
         onChange={handleImageChange}
       />
-      <S.FileInputLabel htmlFor="file">Choose File</S.FileInputLabel>
-
+      <S.FileInputLabel htmlFor="file">Select Images</S.FileInputLabel>
+      {images && (
+        <S.H2>
+          You have uploaded {images.length}{" "}
+          {(images.length < 2 && "image") || "images"}
+        </S.H2>
+      )}
       <S.Button variant="secondary" type="submit">
         Create Product
       </S.Button>

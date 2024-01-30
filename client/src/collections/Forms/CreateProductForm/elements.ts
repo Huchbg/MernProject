@@ -26,9 +26,11 @@ export const Input = styled(_FormInput)(
 export const H2 = styled.h2(
   () => css`
     margin: 0;
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
     width: 100%;
     text-align: center;
+    margin-top: 30px;
+    color: white;
   `
 );
 
@@ -65,41 +67,52 @@ export const FileInputLabel = styled.label`
   font-weight: 500;
   margin-bottom: 1rem;
   outline: none;
-  padding: 1rem 50px;
+  padding: 1rem 40px;
   position: relative;
   transition: all 0.3s;
   vertical-align: middle;
 
   max-width: 190px;
 
-  &:hover {
-    background-color: darken(#f15d22, 10%);
-  }
+  margin: 0 auto;
+  margin-top: 20px;
 
-  background-color: #99c793;
+  word-wrap: unset;
+
+  background-color: #4ee1ad;
   border-radius: 50px;
   overflow: hidden;
 
   &::before {
-    color: #fff;
-    content: "\f382";
-    font-size: 100%;
-    height: 100%;
-    right: 130%;
-    line-height: 3.3;
+    content: ""; /* empty string */
+    background: url("/imgs/upload.png") no-repeat; /* path to your image */
+    background-size: cover; /* or contain, depending on your needs */
+    width: 32px; /* set width and height according to your image size */
+    height: 32px;
+    display: inline-block; /* or block, depending on your layout */
     position: absolute;
-    top: 0px;
+    right: 130%;
+    top: 9px;
     transition: all 0.3s;
   }
 
   &:hover {
-    background-color: darken(#99c793, 30%);
+    opacity: 0.8;
 
     &::before {
-      right: 75%;
+      right: 77%;
     }
   }
 `;
+
+export const H6 = styled.h6(
+  () => css`
+    margin: 0;
+    /* padding-bottom: 20px; */
+    width: 100%;
+    text-align: center;
+  `
+);
 
 // export const CheckBoxText = styled(_Paragraph)(
 //   ({ theme: { colors } }) => css`
