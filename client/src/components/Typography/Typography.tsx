@@ -1,5 +1,5 @@
 import * as S from "./elements";
-import { HTMLHeadingProps } from "types";
+import { HTMLHeadingProps } from "@/types";
 
 export interface H1Props extends HTMLHeadingProps {
   variant?: "regular";
@@ -53,7 +53,10 @@ export interface ParagraphProps extends HTMLHeadingProps {
   variant?: "regular";
 }
 
-export const Paragraph = ({ variant = "regular", ...props }: ParagraphProps) => {
+export const Paragraph = ({
+  variant = "regular",
+  ...props
+}: ParagraphProps) => {
   return <S.Paragraph {...props} variant={variant} />;
 };
 
@@ -64,5 +67,5 @@ export const Typography = {
   H4,
   H5,
   H6,
-  Paragraph
+  Paragraph,
 };

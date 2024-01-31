@@ -5,7 +5,7 @@ import {
 import styled, { css } from "styled-components";
 
 export const ProductsMain = styled.section(
-  () => css`
+  ({ theme: { breakpoint } }) => css`
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;

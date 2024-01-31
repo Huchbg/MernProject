@@ -32,25 +32,25 @@ export class UsersApiClient {
     return response.json();
   }
 
-  public async signUp(credentials: SignUpCredentials): Promise<User> {
+  public async signUp(signUpCredentials: SignUpCredentials): Promise<User> {
     const response = await this.fetchData(`${this.baseUrl}/api/users/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(signUpCredentials),
     });
 
     return response.json();
   }
 
-  public async login(credentials: SignUpCredentials): Promise<User> {
+  public async login(loginCredentials: LoginCredentials): Promise<User> {
     const response = await this.fetchData(`${this.baseUrl}/api/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(loginCredentials),
     });
 
     return response.json();

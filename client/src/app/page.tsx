@@ -1,3 +1,5 @@
+"use client";
+
 import { ProductsMain } from "@/sections";
 
 export default function Home() {
