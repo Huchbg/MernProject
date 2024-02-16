@@ -8,19 +8,22 @@ export class UsersApiClient {
   }
 
   private async fetchData(input: RequestInfo, init?: RequestInit) {
-    const headers = new Headers(init?.headers);
+    try {
+      const response = await fetch(input, {
+        ...init,
+        credentials: "include", // Set credentials to include
+      });
 
-    // Include credentials in the request
-    headers.append("credentials", "include");
-
-    const response = await fetch(input, { ...init, headers });
-
-    if (response.ok) {
-      return response;
-    } else {
-      const errorBody = await response.json();
-      const errorMessage = errorBody.error;
-      throw Error(errorMessage);
+      if (response.ok) {
+        return response;
+      } else {
+        const errorBody = await response.json();
+        const errorMessage = errorBody.error;
+        throw Error(errorMessage);
+      }
+    } catch (error) {
+      console.error("Fetch Error:", error);
+      throw error;
     }
   }
 

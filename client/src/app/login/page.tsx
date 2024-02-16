@@ -1,7 +1,11 @@
-import { ProductsMain } from "@/sections";
-import { theme, GlobalStyles } from "@/styles";
-import { ThemeProvider } from "styled-components";
+"use client";
+
+import { LoginMain } from "@/sections";
 
 export default function Home() {
-  return <></>;
+  return (
+    <main>
+      <LoginMain />
+    </main>
+  );
 }

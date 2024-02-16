@@ -15,14 +15,14 @@ app.use(morgan("dev"));
 
 const allowedOrigins = ["http://localhost:3000"];
 
+app.use(express.json());
+
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
   credentials: true,
 };
 
 app.use(cors(options));
-
-app.use(express.json());
 
 app.use(
   session({

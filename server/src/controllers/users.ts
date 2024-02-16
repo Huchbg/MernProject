@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
   const authenticatedUserId = req.session.userId;
 
+  console.log(authenticatedUserId);
   try {
     if (!authenticatedUserId) {
       throw createHttpError(401, "User not authenticated");

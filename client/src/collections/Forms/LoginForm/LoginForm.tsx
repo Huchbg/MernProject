@@ -2,50 +2,36 @@ import { useZodForm } from "@/hooks";
 import * as S from "./elements";
 import { loginFormSchema } from "@/schemas";
 import { useState } from "react";
+import { UsersApiClient } from "@/network";
+import { useRouter } from "next/navigation";
 
-export interface LoginFormProps {
-  title: string;
-  emailInputText: string;
-  passwordInputText: string;
-  buttonText: string;
-  checkBoxText: string;
-}
-
-export const LoginForm = ({
-  checkBoxText,
-  title,
-  emailInputText,
-  buttonText,
-  passwordInputText,
-  ...props
-}: LoginFormProps) => {
+export const LoginForm = ({ ...props }) => {
+  const router = useRouter();
   const [hasError, setHasError] = useState<boolean>(false);
   const [nError, setError] = useState<string>("");
   const { control, handleSubmit } = useZodForm(loginFormSchema, {
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: false,
     },
   });
 
   const submitHandler = handleSubmit(async ({ email, password }) => {
-    // try {
-    //   const user = await signIn("credentials", {
-    //     email,
-    //     password,
-    //     redirect: false,
-    //   });
-    //   if (user?.error) {
-    //     setError(user?.error);
-    //     setHasError(true);
-    //   } else {
-    //     setHasError(false);
-    //   }
-    // } catch (error: any) {
-    //   setHasError(true);
-    //   setError(error.message);
-    // }
+    console.log({ email, password });
+    try {
+      const ApiDomain = process.env.productApiDomain || "";
+
+      const usersApiClient = new UsersApiClient(ApiDomain);
+
+      const user = await usersApiClient.login({ email, password });
+
+      console.log(user);
+
+      // router.push("/");
+    } catch (error: any) {
+      setHasError(true);
+      setError(error.message);
+    }
   });
 
   return (
@@ -54,17 +40,17 @@ export const LoginForm = ({
         control={control}
         name="email"
         type="email"
-        placeholder={emailInputText}
+        placeholder="Enter Email"
       />
       <S.Input
         control={control}
         name="password"
         type="password"
-        placeholder={passwordInputText}
+        placeholder="Enter Password"
       />
 
       <S.Button variant="primary" type="submit">
-        {buttonText}
+        Login
       </S.Button>
       {hasError && <S.ErrorP>{nError}</S.ErrorP>}
     </S.FormContainer>

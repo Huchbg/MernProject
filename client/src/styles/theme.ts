@@ -17,21 +17,23 @@ export const theme: DefaultTheme = {
     purplish: "#793E3E",
     yellow: "#F2C44E",
     purple: "#6A6DB0",
-    bordersGray: "#ffffff66"
+    bordersGray: "#ffffff66",
+    green: "#4ee1ad",
   },
   typography,
   gradients: {
-    blueToPurple: "linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)",
+    blueToPurple:
+      "linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)",
     buttonBackground: "linear-gradient(180deg, #FFDB7D 0%, #DEA30A 100%)",
     silverToGray: "linear-gradient(180deg, #BCBCBC 0%, #4A4A4A 100%)",
     yellowToGold: "linear-gradient(180deg, #DEA30A 0%, #584001 100%)",
     purplishToBlack: "linear-gradient(180deg, #793E3E 0%, #301818 100%)",
     heroImage:
-      "linear-gradient(180deg,rgba(0, 0, 0, 0.00) 0%,rgba(0, 0, 0, 0.50) 100%),url(<path-to-image>)"
+      "linear-gradient(180deg,rgba(0, 0, 0, 0.00) 0%,rgba(0, 0, 0, 0.50) 100%),url(<path-to-image>)",
   },
   breakpoint: {
     max: maxWidth,
     min: minWidth,
-    val: breakpoints
-  }
+    val: breakpoints,
+  },
 };
