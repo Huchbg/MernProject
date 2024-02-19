@@ -2,8 +2,11 @@ import { useZodForm } from "@/hooks";
 import * as S from "./elements";
 import { registerFormSchema } from "@/schemas";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { UsersApiClient } from "@/network";
 
 export const RegisterForm = ({ ...props }) => {
+  const router = useRouter();
   const [hasError, setHasError] = useState<boolean>(false);
   const [nError, setError] = useState<string>("");
   const { control, handleSubmit } = useZodForm(registerFormSchema, {
@@ -16,22 +19,20 @@ export const RegisterForm = ({ ...props }) => {
   });
 
   const submitHandler = handleSubmit(async ({ username, email, password }) => {
-    // try {
-    //   const user = await signIn("credentials", {
-    //     email,
-    //     password,
-    //     redirect: false,
-    //   });
-    //   if (user?.error) {
-    //     setError(user?.error);
-    //     setHasError(true);
-    //   } else {
-    //     setHasError(false);
-    //   }
-    // } catch (error: any) {
-    //   setHasError(true);
-    //   setError(error.message);
-    // }
+    try {
+      const ApiDomain = process.env.productApiDomain || "";
+
+      const usersApiClient = new UsersApiClient(ApiDomain);
+
+      const user = await usersApiClient.signUp({ username, email, password });
+
+      // console.log(user);
+
+      router.push("/");
+    } catch (error: any) {
+      setHasError(true);
+      setError(error.message);
+    }
   });
 
   return (

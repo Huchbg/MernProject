@@ -1,14 +1,16 @@
 import { useZodForm } from "@/hooks";
 import * as S from "./elements";
 import { loginFormSchema } from "@/schemas";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UsersApiClient } from "@/network";
 import { useRouter } from "next/navigation";
 
 export const LoginForm = ({ ...props }) => {
   const router = useRouter();
+
   const [hasError, setHasError] = useState<boolean>(false);
   const [nError, setError] = useState<string>("");
+
   const { control, handleSubmit } = useZodForm(loginFormSchema, {
     defaultValues: {
       email: "",
@@ -17,7 +19,6 @@ export const LoginForm = ({ ...props }) => {
   });
 
   const submitHandler = handleSubmit(async ({ email, password }) => {
-    console.log({ email, password });
     try {
       const ApiDomain = process.env.productApiDomain || "";
 
@@ -25,9 +26,9 @@ export const LoginForm = ({ ...props }) => {
 
       const user = await usersApiClient.login({ email, password });
 
-      console.log(user);
+      // console.log(user);
 
-      // router.push("/");
+      router.push("/");
     } catch (error: any) {
       setHasError(true);
       setError(error.message);
