@@ -24,9 +24,7 @@ export const RegisterForm = ({ ...props }) => {
 
       const usersApiClient = new UsersApiClient(ApiDomain);
 
-      const user = await usersApiClient.signUp({ username, email, password });
-
-      // console.log(user);
+      await usersApiClient.signUp({ username, email, password });
 
       router.push("/");
     } catch (error: any) {

@@ -48,10 +48,13 @@ export class ProductApiClient {
     return response.json();
   }
 
-  public async deleteProduct(productId: string) {
-    await this.fetchData(`${this.baseUrl}/api/products/${productId}`, {
-      method: "DELETE",
-    });
+  public async deleteProduct(productId: string, creatorId: string) {
+    await this.fetchData(
+      `${this.baseUrl}/api/products/${productId}?creatorId=${creatorId}`,
+      {
+        method: "DELETE",
+      }
+    );
   }
 }
 

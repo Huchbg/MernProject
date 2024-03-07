@@ -156,6 +156,8 @@ export const updateProduct: RequestHandler<
 
 export const deleteProduct: RequestHandler = async (req, res, next) => {
   const productId = req.params.productId;
+  const creatorId = req.query.creatorId;
+  const currentUserId = req.session.userId;
 
   try {
     if (!mongoose.isValidObjectId(productId)) {
@@ -166,6 +168,13 @@ export const deleteProduct: RequestHandler = async (req, res, next) => {
 
     if (!product) {
       throw createHttpError(404, "Product not found");
+    }
+
+    if (creatorId !== currentUserId) {
+      throw createHttpError(
+        403,
+        "You are not authorized to delete this product"
+      );
     }
 
     await ProductModel.findByIdAndRemove(productId);

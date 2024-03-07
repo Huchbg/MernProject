@@ -39,4 +39,11 @@ export const Button = styled.button(
   `
 );
 
+export const ButonsContainer = styled.div(
+  () => css`
+    display: flex;
+    justify-content: space-between;
+  `
+);
+
 export const CreateProduct = styled(_CreateProduct)(() => css``);

@@ -46,7 +46,7 @@ export const ProductMainPage = ({
           const productApiDomain = process.env.productApiDomain || "";
 
           const productApiClient = new ProductApiClient(productApiDomain);
-          await productApiClient.deleteProduct(_id);
+          await productApiClient.deleteProduct(_id, creator._id);
 
           setProducts(([...prev]) => {
             const newProducts = prev.filter((product) => product._id !== _id);
