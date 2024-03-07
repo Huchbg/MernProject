@@ -24,6 +24,11 @@ const productSchema = new Schema(
         width: Number,
       },
     ],
+    creator: {
+      username: String,
+      email: String,
+      _id: String,
+    },
   },
   { timestamps: true }
 );

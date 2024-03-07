@@ -10,4 +10,9 @@ export interface Product {
     height: number;
     width: number;
   }[];
+  creator: {
+    username: string;
+    email: string;
+    _id: string;
+  };
 }

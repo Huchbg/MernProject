@@ -16,8 +16,10 @@ export const ProductMainPage = ({
   imagesId,
   images,
   setProducts,
+  creator,
   ...props
 }: Product & HooksProps & HTMLDivProps) => {
+  console.log(creator);
   return (
     <S.Product {...props}>
       <S.Name>{name}</S.Name>
@@ -62,6 +64,7 @@ export const ProductMainPage = ({
           />
         </S.ImageContainer>
       </S.DeleteButton>
+      <S.UserName>{creator.username}</S.UserName>
     </S.Product>
   );
 };

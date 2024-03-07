@@ -22,7 +22,8 @@ declare module "styled-components" {
     | "yellow"
     | "purple"
     | "bordersGray"
-    | "green";
+    | "green"
+    | "grayUser";
 
   type Gradients =
     | "blueToPurple"

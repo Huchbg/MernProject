@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Image as _Image } from "@/components";
+import { Image as _Image, H3 as _H3 } from "@/components";
 import Link from "next/link";
 
 export const Product = styled.div(
@@ -11,6 +11,8 @@ export const Product = styled.div(
     background-color: #242424;
 
     padding: 30px 20px;
+
+    padding-bottom: 50px;
 
     &:not(:first-child) {
       margin-top: 20px;
@@ -92,5 +94,14 @@ export const ProductImagesContiner = styled.div(
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+  `
+);
+
+export const UserName = styled(_H3)(
+  ({ theme: { colors } }) => css`
+    color: ${colors.grayUser};
+    font-size: 15px;
+    position: absolute;
+    bottom: 10px;
   `
 );

@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import ProductModel from "../models/product";
+import UserModel from "../models/user";
 import createHttpError from "http-errors";
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
@@ -50,8 +51,7 @@ export const createProduct: RequestHandler<
   const name = req.body.name;
   const description = req.body.description;
   const testImages = req.files;
-
-  // console.log(name, description, images);
+  const creatorId = req.session.userId;
 
   let images: Express.Multer.File[] = [];
   let imagesIdForProduct: string = "";
@@ -59,6 +59,7 @@ export const createProduct: RequestHandler<
     images = [...testImages];
     imagesIdForProduct = uuidv4();
   }
+
   try {
     if (!name) {
       throw createHttpError(400, "Product must have a name");
@@ -68,10 +69,19 @@ export const createProduct: RequestHandler<
       throw createHttpError(400, "Product must have a description");
     }
 
+    const creator = await UserModel.findById(creatorId)
+      .select(" +email")
+      .exec();
+
+    if (!creator) {
+      throw createHttpError(404, "Creator not found");
+    }
+
     const newProduct = await ProductModel.create({
       name: name,
       description: description,
       imagesId: imagesIdForProduct,
+      creator: creator, // Assigning creator object to the product
       images: await Promise.all(
         images.map(async (image) => {
           const uniqueId = uuidv4();

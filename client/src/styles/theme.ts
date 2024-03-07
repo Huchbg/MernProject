@@ -19,6 +19,7 @@ export const theme: DefaultTheme = {
     purple: "#6A6DB0",
     bordersGray: "#ffffff66",
     green: "#4ee1ad",
+    grayUser: "#d9d9d9",
   },
   typography,
   gradients: {

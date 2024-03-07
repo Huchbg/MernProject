@@ -8,7 +8,10 @@ export class ProductApiClient {
   }
 
   private async fetchData(input: RequestInfo, init?: RequestInit) {
-    const response = await fetch(input, init);
+    const response = await fetch(input, {
+      ...init,
+      credentials: "include", // Set credentials to include
+    });
 
     if (response.ok) {
       return response;
