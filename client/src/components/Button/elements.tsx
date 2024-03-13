@@ -45,7 +45,7 @@ const buttonStyles = {
 
 export const Button = styled.button<ButtonProps>(
   ({ variant }) => css`
-    ${variant == "primary" && buttonStyles}
-    ${variant == "secondary" && buttonStyles}
+    ${variant == "primary" && buttonStyles.primary}
+    ${variant == "secondary" && buttonStyles.secondary}
   `
 );

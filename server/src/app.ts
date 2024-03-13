@@ -13,7 +13,10 @@ const app = express();
 
 app.use(morgan("dev"));
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://mern-client-pink.vercel.app",
+];
 
 app.use(express.json());
 

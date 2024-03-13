@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
-import {
-  Button as _Button,
-  FormInput as _FormInput,
-} from "../../../components";
+
+import { FormInput as _FormInput, Button as _Button } from "@/components";
 
 export const FormContainer = styled.form(
   () => css`

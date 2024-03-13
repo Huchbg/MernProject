@@ -50,7 +50,7 @@ export const LoginForm = ({ ...props }) => {
         placeholder="Enter Password"
       />
 
-      <S.Button variant="primary" type="submit">
+      <S.Button variant="secondary" type="submit">
         Login
       </S.Button>
       {hasError && <S.ErrorP>{nError}</S.ErrorP>}

@@ -60,7 +60,7 @@ export const RegisterForm = ({ ...props }) => {
         placeholder="Confirm Password"
       />
 
-      <S.Button variant="primary" type="submit">
+      <S.Button variant="secondary" type="submit">
         Register
       </S.Button>
       {hasError && <S.ErrorP>{nError}</S.ErrorP>}
